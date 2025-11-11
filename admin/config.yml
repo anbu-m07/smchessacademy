@@ -6,13 +6,13 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "tournaments"
-    label: "Tournaments"
-    label_singular: "Tournament"
+  - label: "Tournaments"
+    name: "tournaments"
     files:
-      - file: "content/tournaments.json"
-        label: "Tournaments List"
-        name: "tournamentslist"
+      - label: "Tournaments Data"
+        name: "tournamentsdata"
+        file: "content/tournaments.json"
+        format: "json"
         fields:
           - label: "Tournaments"
             name: "tournaments"
