@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SM Chess Academy — Book Trial</title>
+  <meta name="description" content="SM Chess Academy — Online chess coaching for all ages. Book a free trial." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#5B3A29; /* Dark Brown */
+      --accent:#D32F2F;  /* Red */
+      --beige:#F5E9DA;   /* Beige */
+      --text:#211D1B;    /* Black-ish */
+      --white:#FFFFFF;
+      --muted:#5c524a;
+      --glass: rgba(255,255,255,0.85);
+      --card-shadow: 0 10px 30px rgba(11,8,6,0.08);
+      --radius:16px;
+      --max-width:1100px;
+      --transition:200ms cubic-bezier(.2,.9,.3,1);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,var(--beige) 0%, #f8efe6 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{position:sticky;top:0;background:var(--primary);z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+    .brand{font-family:Poppins,system-ui;font-weight:700;font-size:20px;color:var(--white);letter-spacing:.2px}
+    .nav-menu{display:flex;gap:18px;align-items:center}
+    .nav-menu a{color:var(--white);font-weight:600;opacity:.95}
+    .cta{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;box-shadow:0 6px 18px rgba(211,47,47,.18)}
+    .nav-toggle{display:none;background:transparent;border:none;color:#fff;font-size:26px}
+
+    /* Hero */
+    .hero{background:linear-gradient(90deg,rgba(91,58,41,0.95), rgba(91,58,41,0.95));color:#fff;padding:38px 0}
+    .hero .container{display:flex;align-items:center;gap:20px}
+    .hero h1{font-family:Poppins,sans-serif;font-size:34px;margin:0}
+    .hero p{margin:6px 0 0;opacity:.9}
+
+    /* Main booking area */
+    main{padding:36px 0}
+    .booking-wrap{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
+    @media (max-width:1000px){ .booking-wrap{grid-template-columns:1fr} .sidebar {order:-1} }
+
+    /* Card */
+    .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--card-shadow);padding:20px}
+
+    /* Progress */
+    .progress{
+      display:flex;gap:8px;align-items:center;margin-bottom:18px;
+    }
+    .step{
+      display:flex;flex-direction:column;align-items:center;width:100%;
+    }
+    .step .bullet{
+      width:36px;height:36px;border-radius:12px;background:#f2ebe4;border:2px solid rgba(35,31,29,.05);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--primary);
+      transition:all var(--transition);
+    }
+    .step.active .bullet{background:var(--accent);color:#fff;border-radius:10px;transform:translateY(-3px)}
+    .step label{font-size:12px;color:var(--muted);margin-top:6px;text-align:center}
+
+    /* Form steps area */
+    .form-stage{position:relative;min-height:260px}
+    .stage{position:absolute;inset:0;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity var(--transition), transform var(--transition)}
+    .stage.active{opacity:1;transform:none;pointer-events:auto}
+    .field{margin-top:12px}
+    label{display:block;font-weight:600;margin-bottom:8px;color:var(--primary);font-size:14px}
+    input[type="text"],input[type="email"],input[type="number"],select,input[type="date"],input[type="time"],textarea{
+      width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;background:#fff;font-size:14px;
+    }
+    .row{display:flex;gap:12px}
+    .row .col{flex:1}
+    /* Form steps area */
+/* Main form section container */
+.section form,
+.booking-card {
+  max-width: 1100px;   /* make the white area span wider */
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 50px;  /* more spacing inside */
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+/* Date button grid */
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+  gap: 16px;  /* spacing between date buttons */
+  margin-top: 16px;
+}
+
+.date-grid button {
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+}
+
+
+
+
+    /* Date picker calendar area (simple) */
+    .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
+    .cal-day{padding:10px;border-radius:8px;text-align:center;cursor:pointer;border:1px dashed transparent;transition:all var(--transition);font-size:13px}
+    .cal-day:hover{transform:translateY(-4px)}
+    .cal-day.disabled{opacity:.35;cursor:not-allowed;transform:none}
+    .cal-day.selected{background:var(--primary);color:#fff;border-radius:10px}
+    .timeslot{display:inline-block;padding:8px 10px;border-radius:8px;margin:6px 6px 0 0;border:1px solid #eee;cursor:pointer}
+    .timeslot.disabled{opacity:.45;cursor:not-allowed}
+    .timeslot.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+    /* Sidebar summary */
+    .sidebar .summary { display:flex;flex-direction:column;gap:10px}
+    .summary .item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(180deg,#fff,#faf7f4);border:1px solid #f0e7df}
+    .summary h4{margin:0;font-size:14px;color:var(--primary)}
+
+    /* Buttons */
+    .actions{display:flex;gap:12px;justify-content:space-between;margin-top:18px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:10px;font-weight:700;background:var(--accent);color:#fff;border:none;cursor:pointer;
+      transition:all var(--transition)
+    }
+    .btn.secondary{background:transparent;color:var(--primary);border:2px solid rgba(91,58,41,.08)}
+    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .hint{font-size:13px;color:#8b7b70;margin-top:6px}
+    .error{color:#b00020;font-size:13px;margin-top:6px}
+
+    /* Confirmation layout */
+    .confirm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:700px){ .confirm-grid{grid-template-columns:1fr} }
+
+    /* chess icon accent */
+    .chess-icon { width:40px;height:40px;border-radius:8px;background:linear-gradient(180deg,#fff,#f3ebe1);display:flex;align-items:center;justify-content:center;color:var(--primary);font-weight:700}
+
+    /* footer */
+    footer{background:var(--primary);color:#EADFD7;margin-top:48px}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px;padding:36px 0}
+    footer a{color:#f5cfcf}
+    .copyright{padding:12px 0;border-top:1px solid rgba(255,255,255,.06);color:#e6d5cc}
+
+    /* subtle animations */
+    .fade-in{animation:fadeIn .32s ease both}
+    @keyframes fadeIn{ from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><a href="index.html" style="color:var(--white)">♕ SM Chess Academy</a></div>
+      <nav class="nav-menu">
+      <a href="programs.html">Programs</a>
+      <a href="about.html">About</a>
+      <a href="success.html">Success</a>
+      <a href="login.html">Login</a>
+      <a href="tournaments.html">Tournaments</a>
+      <a href="booking.html" class="cta">Book Free Trial</a>
+    </nav>
+    </div>
+  </header>
+
+  <main class="container" aria-live="polite">
+    <section class="hero">
+      <div class="container" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="flex:1;">
+          <h1>Book Your Session</h1>
+          <p>Follow the steps to book a trial or paid session. You can print or add the session to your calendar after confirmation.</p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="chess-icon" aria-hidden="true">♘</div>
+          <div class="muted">Expert guidance • Flexible schedules</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px">
+      <div class="booking-wrap">
+        <!-- LEFT: form steps -->
+        <div class="card">
+          <div class="progress" role="tablist" aria-label="Booking steps">
+            <div class="step active" data-step="1"><div class="bullet">1</div><label>Program</label></div>
+            <div class="step" data-step="2"><div class="bullet">2</div><label>Date & Time</label></div>
+            <div class="step" data-step="3"><div class="bullet">3</div><label>Student</label></div>
+            <div class="step" data-step="4"><div class="bullet">4</div><label>Parent</label></div>
+            <div class="step" data-step="5"><div class="bullet">5</div><label>Confirm</label></div>
+          </div>
+
+          <div class="form-stage" id="formStage" aria-live="polite">
+            <!-- STEP 1 -->
+            <div class="stage active" data-stage="1" id="stage-1">
+              <h3 style="margin:0 0 8px;font-family:Poppins">Step 1 — Choose Program</h3>
+              <p class="muted">Pick a program, instructor and session type.</p>
+
+              <div class="field">
+                <label for="program">Program</label>
+                <select id="program" required>
+                  <option value="">Select program</option>
+                  <option value="Free Trial — 30 mins">Free Trial — 30 mins</option>
+                  <option value="Beginner Course">Beginner Course</option>
+                  <option value="Intermediate Course">Intermediate Course</option>
+                  <option value="Advanced 1:1 Coaching">Advanced 1:1 Coaching</option>
+                </select>
+              </div>
+
+              <div class="row" style="margin-top:12px">
+                <div class="col field">
+                  <label for="sessionType">Session Type</label>
+                  <select id="sessionType" aria-describedby="sessionHint">
+                    <option value="individual">Individual (1:1)</option>
+                    <option value="group">Group Session</option>
+                  </select>
+                </div>
+                <div class="col field">
+                  <label for="instructor">Instructor</label>
+                  <select id="instructor">
+                    <option value="">Any available coach</option>
+                    <option value="Coach A (FIDE Master)">Coach A — FIDE Master</option>
+                    <option value="Coach B (WIM)">Coach B </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="actions">
+                <div></div>
+                <div>
+                  <button class="btn" id="toStep2">Next →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="stage" data-stage="2" id="stage-2" aria-hidden="true">
+              <h3 style="margin:0 0 8px;font-family:Poppins">Step 2 — Choose Date & Time</h3>
+              <p class="muted">Select a date; available time slots for that day will appear.</p>
+
+              <div class="field">
+                <label for="datePicker">Pick a date</label>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <input id="datePicker" type="date" aria-describedby="dateHelp">
+                  <div class="hint" id="dateHelp">Available dates highlighted. Weekends limited.</div>
+                </div>
+
+                <div id="calHint" class="hint" style="margin-top:8px">Or choose from the next 14 days:</div>
+                <div class="calendar" id="calendarGrid" aria-hidden="false" style="margin-top:8px"></div>
+              </div>
+
+              <div class="field">
+                <label>Available times</label>
+                <div id="timesList" aria-live="polite" class="hint">Choose a date first.</div>
+              </div>
+
+              <div class="actions">
+                <button class="btn secondary" id="backTo1">← Back</button>
+                <div style="display:flex;gap:8px">
+                  <button class="btn" id="toStep3">Next →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="stage" data-stage="3" id="stage-3" aria-hidden="true">
+              <h3 style="margin:0 0 8px;font-family:Poppins">Step 3 — Student Info</h3>
+              <p class="muted">Tell us about the student.</p>
+
+              <div class="field">
+                <label for="studentName">Student Name</label>
+                <input id="studentName" type="text" placeholder="Student Full Name" required>
+                <div id="studentNameError" class="error" aria-live="polite"></div>
+              </div>
+
+              <div class="row">
+                <div class="col field">
+                  <label for="age">Age</label>
+                  <input id="age" type="number" placeholder="e.g., 10" min="4" max="18" required>
+                  <div id="ageError" class="error" aria-live="polite"></div>
+                </div>
+                <div class="col field">
+                  <label for="level">Current Level (optional)</label>
+                  <input id="level" type="text" placeholder="Beginner / Interm / Advanced">
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn secondary" id="backTo2">← Back</button>
+                <button class="btn" id="toStep4">Next →</button>
+              </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="stage" data-stage="4" id="stage-4" aria-hidden="true">
+              <h3 style="margin:0 0 8px;font-family:Poppins">Step 4 — Parent / Contact</h3>
+              <p class="muted">We will send booking details to this email and WhatsApp (if added).</p>
+
+              <div class="field">
+                <label for="parentName">Parent / Guardian Name</label>
+                <input id="parentName" type="text" placeholder="Parent / Guardian">
+              </div>
+
+              <div class="field">
+                <label for="parentEmail">Parent Email</label>
+                <input id="parentEmail" type="email" placeholder="you@example.com" required>
+                <div id="emailError" class="error" aria-live="polite"></div>
+              </div>
+
+              <div class="field">
+                <label for="whatsapp">WhatsApp (optional)</label>
+                <input id="whatsapp" type="text" placeholder="+91 98xxxx">
+                <div class="hint">We'll use this for quick SMS/WhatsApp updates. (Optional)</div>
+              </div>
+
+              <div class="actions">
+                <button class="btn secondary" id="backTo3">← Back</button>
+                <button class="btn" id="toStep5">Review →</button>
+              </div>
+            </div>
+
+            <!-- STEP 5 — Confirmation -->
+            <div class="stage" data-stage="5" id="stage-5" aria-hidden="true">
+              <h3 style="margin:0 0 8px;font-family:Poppins">Step 5 — Confirm & Submit</h3>
+              <p class="muted">Review the booking details below. You can print, add to calendar, or submit to confirm.</p>
+
+              <div class="card" style="margin-top:12px">
+                <div class="confirm-grid" id="confirmSummary">
+                  <div>
+                    <strong>Program</strong>
+                    <div id="c_program" class="muted" style="margin-top:6px"></div>
+                    <strong style="margin-top:8px;display:block">Session Type</strong>
+                    <div id="c_type" class="muted"></div>
+                    <strong style="margin-top:8px;display:block">Instructor</strong>
+                    <div id="c_instructor" class="muted"></div>
+                  </div>
+                  <div>
+                    <strong>Date & Time</strong>
+                    <div id="c_when" class="muted" style="margin-top:6px"></div>
+                    <strong style="margin-top:8px;display:block">Student</strong>
+                    <div id="c_student" class="muted"></div>
+                  </div>
+                </div>
+                <div style="margin-top:12px" id="submissionStatus"></div>
+
+                <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                  <button class="btn secondary" id="printBtn">Print</button>
+                  <button class="btn secondary" id="addGoogle">Add to Google Calendar</button>
+                  <button class="btn secondary" id="downloadICS">Download .ics</button>
+                </div>
+
+                <div style="display:flex;gap:12px;justify-content:space-between;margin-top:12px">
+                  <button class="btn secondary" id="backTo4">← Back</button>
+                  <button class="btn" id="submitBooking">Confirm & Book</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT: sidebar summary + contact -->
+        <aside class="sidebar">
+          <div class="card">
+            <h4 style="margin:0 0 8px;font-family:Poppins">Booking Summary</h4>
+            <div class="summary">
+              <div class="item"><div><strong id="s_program">—</strong><div class="muted">Program</div></div><div></div></div>
+              <div class="item"><div><strong id="s_when">—</strong><div class="muted">Date & Time</div></div></div>
+              <div class="item"><div><strong id="s_student">—</strong><div class="muted">Student</div></div></div>
+              <div class="item"><div><strong id="s_parent">—</strong><div class="muted">Contact</div></div></div>
+              <div style="margin-top:8px" class="muted">Need help? Contact us:</div>
+              <div style="margin-top:8px">
+                <div class="muted">Email: <a href=""></a></div>
+                <div class="muted">WhatsApp: <a href="" target="_blank"></a></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:18px"></div>
+
+          <div class="card">
+            <h4 style="margin:0 0 8px;font-family:Poppins">Notes</h4>
+            <p class="muted" style="margin:0">Free trial is 30 minutes. Paid sessions can be booked after payment. We will confirm coach availability via email.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>
+        <strong>♛ SM Chess Academy</strong>
+        <p class="muted">Strategic online chess lessons for all ages and skill levels.</p>
+      </div>
+      <div>
+        <strong>Quick Links</strong><br>
+        <a href="programs.html">Programs & Pricing</a><br>
+        <a href="booking.html">Book a Free Trial</a><br>
+        <a href="about.html">About Us</a><br>
+        <a href="success.html">Student Success</a><br>
+      </div>
+      <div>
+        <strong>Contact</strong>
+        <p class="muted">Email: <a href=""></a><br>
+        WhatsApp: <a href="" target="_blank"></a></p>
+      </div>
+    </div>
+    <div class="container copyright">© 2025 SM Chess Academy</div>
+  </footer>
+
+  <script>
+   
+    const FORM_ENDPOINT = "https://formspree.io/f/yourformid"; 
+
+    
+    const availability = (() => {
+      const days = {};
+      const today = new Date();
+      for (let i=0;i<21;i++){
+        const d = new Date(today);
+        d.setDate(today.getDate()+i);
+        const iso = d.toISOString().slice(0,10);
+        const weekday = d.getDay();
+       
+        if (weekday === 0) { days[iso] = []; continue; }
+
+        if (weekday === 6) {
+          days[iso] = ["10:00","11:00","16:00"];
+          continue;
+        }
+       
+        days[iso] = ["09:00","10:00","11:00","16:00","17:00","18:00"];
+      }
+      return days;
+    })();
+
+    // booking state
+    const booking = {
+      program: "",
+      sessionType: "individual",
+      instructor: "",
+      date: "",
+      time: "",
+      studentName: "",
+      age: "",
+      level: "",
+      parentName: "",
+      parentEmail: "",
+      whatsapp: ""
+    };
+
+
+    function el(q) { return document.querySelector(q); }
+    function els(q) { return Array.from(document.querySelectorAll(q)); }
+    function setText(id, value) { const el = document.getElementById(id); if(el) el.textContent = value || "—"; }
+
+    function stepIndex() {
+      return els(".step").findIndex(s=>s.classList.contains("active")) + 1;
+    }
+    function gotoStep(n) {
+      els(".step").forEach((s,i)=> {
+        if (i+1 === n) s.classList.add("active"); else s.classList.remove("active");
+      });
+      els(".stage").forEach(st => {
+        const idx = Number(st.dataset.stage);
+        if (idx === n) {
+          st.classList.add("active");
+          st.removeAttribute("aria-hidden");
+        } else {
+          st.classList.remove("active");
+          st.setAttribute("aria-hidden","true");
+        }
+      });
+    }
+
+ 
+    const calendarGrid = el("#calendarGrid");
+    const dateInput = el("#datePicker");
+    function renderCalendar() {
+      calendarGrid.innerHTML = "";
+      const keys = Object.keys(availability);
+      keys.forEach(dateKey => {
+        const d = new Date(dateKey);
+        const day = d.toLocaleDateString(undefined,{weekday:"short", day:"numeric", month:"short"});
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "cal-day";
+        btn.textContent = day;
+        btn.dataset.date = dateKey;
+        if (!availability[dateKey] || availability[dateKey].length===0) btn.classList.add("disabled");
+        btn.addEventListener("click", ()=> {
+          if (btn.classList.contains("disabled")) return;
+          dateInput.value = dateKey;
+          booking.date = dateKey;
+          renderTimes(dateKey);
+          updateSummary();
+        });
+        calendarGrid.appendChild(btn);
+      });
+      // set date input min/max
+      dateInput.min = keys[0];
+      dateInput.max = keys[keys.length-1];
+    }
+    function renderTimes(isoDate) {
+      const timesList = el("#timesList");
+      timesList.innerHTML = "";
+      const times = availability[isoDate] || [];
+      if (!times.length) {
+        timesList.textContent = "No available slots for this date. Choose another date.";
+        return;
+      }
+      times.forEach(t => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "timeslot";
+        btn.textContent = t;
+        btn.dataset.time = t;
+        btn.addEventListener("click", ()=>{
+          // unselect siblings
+          els(".timeslot").forEach(x=>x.classList.remove("selected"));
+          btn.classList.add("selected");
+          booking.time = t;
+          booking.date = isoDate;
+          dateInput.value = isoDate;
+          updateSummary();
+        });
+        timesList.appendChild(btn);
+      });
+    }
+
+    
+    function validateStep(step) {
+      let ok = true;
+      clearErrors();
+      if (step === 1) {
+        const program = el("#program").value.trim();
+        if (!program) { showError("program","Please select a program."); ok=false; }
+      }
+      if (step === 2) {
+        const d = dateInput.value;
+        if (!d) { showError("datePicker","Please select a date."); ok=false; }
+        if (!booking.time) { showError("timesList","Please select a time slot."); ok=false; }
+      }
+      if (step === 3) {
+        const name = el("#studentName").value.trim();
+        const age = Number(el("#age").value);
+        if (!name) { el("#studentNameError").textContent = "Student name is required."; ok=false; } 
+        if (!age || age < 4 || age > 18) { el("#ageError").textContent = "Age must be between 4 and 18."; ok=false; }
+      }
+      if (step === 4) {
+        const email = el("#parentEmail").value.trim();
+        if (!validateEmail(email)) { el("#emailError").textContent = "Enter a valid email address."; ok=false; }
+      }
+      return ok;
+    }
+    function clearErrors() {
+      els(".error").forEach(e=>e.textContent = "");
+      els(".field .error").forEach(e => e.textContent = "");
+      // also remove custom program errors if any
+      el("#program").classList.remove("invalid");
+    }
+    function showError(id,msg) {
+      // show near element if possible
+      const inp = el("#"+id);
+      if (inp) {
+        const err = inp.parentElement.querySelector(".error");
+        if (err) { err.textContent = msg; return; }
+      }
+      // fallback
+      const out = el("#submissionStatus");
+      if (out) out.innerHTML = `<div class="error">${msg}</div>`;
+    }
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+   
+    document.addEventListener("DOMContentLoaded", ()=> {
+      renderCalendar();
+
+      // populate initial state from selects
+      el("#program").addEventListener("change", (e)=> { booking.program = e.target.value; updateSummary(); });
+      el("#sessionType").addEventListener("change", (e)=> { booking.sessionType = e.target.value; updateSummary(); });
+      el("#instructor").addEventListener("change", (e)=> { booking.instructor = e.target.value; updateSummary(); });
+
+      // date input change
+      dateInput.addEventListener("change", (e)=> {
+        const val = e.target.value;
+        booking.date = val;
+        renderTimes(val);
+        updateSummary();
+      });
+
+      // navigation buttons
+      el("#toStep2").addEventListener("click", (ev)=> {
+        ev.preventDefault();
+        if (!validateStep(1)) return;
+        // set booking from inputs
+        booking.program = el("#program").value;
+        booking.sessionType = el("#sessionType").value;
+        booking.instructor = el("#instructor").value;
+        gotoStep(2);
+      });
+      el("#backTo1").addEventListener("click", (ev)=> { ev.preventDefault(); gotoStep(1); });
+      el("#toStep3").addEventListener("click", (ev)=> {
+        ev.preventDefault();
+        if (!validateStep(2)) return;
+        gotoStep(3);
+      });
+      el("#backTo2").addEventListener("click", (ev)=> { ev.preventDefault(); gotoStep(2); });
+      el("#toStep4").addEventListener("click", (ev)=> {
+        ev.preventDefault();
+        // validate student step after copying values
+        booking.studentName = el("#studentName").value.trim();
+        booking.age = el("#age").value;
+        booking.level = el("#level").value.trim();
+        if (!validateStep(3)) return;
+        gotoStep(4);
+      });
+      el("#backTo3").addEventListener("click", (ev)=> { ev.preventDefault(); gotoStep(3); });
+      el("#toStep5").addEventListener("click", (ev)=> {
+        ev.preventDefault();
+        booking.parentName = el("#parentName").value.trim();
+        booking.parentEmail = el("#parentEmail").value.trim();
+        booking.whatsapp = el("#whatsapp").value.trim();
+        if (!validateStep(4)) return;
+        populateConfirm();
+        gotoStep(5);
+      });
+      el("#backTo4").addEventListener("click", (ev)=> { ev.preventDefault(); gotoStep(4); });
+
+      // print & calendar
+      el("#printBtn").addEventListener("click", ()=> window.print());
+      el("#addGoogle").addEventListener("click", addToGoogleCalendar);
+      el("#downloadICS").addEventListener("click", ()=> downloadICS(booking));
+
+      // final submit
+      el("#submitBooking").addEventListener("click", submitBooking);
+
+      // quick keyboard navigation: Enter on inputs triggers Next where reasonable
+      els("input,select").forEach(inp => {
+        inp.addEventListener("keydown", (e)=> {
+          if (e.key === "Enter") {
+            const cur = stepIndex();
+            // emulate clicking Next for current step if present
+            e.preventDefault();
+            if (cur < 5) {
+              const nextBtn = document.querySelector(`.stage.active .btn:not(.secondary)`);
+              if (nextBtn) nextBtn.click();
+            }
+          }
+        });
+      });
+
+      // initialize summary
+      updateSummary();
+    });
+
+    /*************************************************************************
+     * Sync UI summary & confirm
+     *************************************************************************/
+    function updateSummary() {
+      setText("s_program", booking.program || "—");
+      setText("s_when", booking.date ? `${booking.date} ${booking.time || ""}` : "—");
+      setText("s_student", booking.studentName || "—");
+      setText("s_parent", booking.parentEmail ? `${booking.parentEmail}` : (booking.parentName || "—"));
+    }
+
+    function populateConfirm() {
+      setText("c_program", booking.program);
+      setText("c_type", booking.sessionType);
+      setText("c_instructor", booking.instructor || "Any available");
+      setText("c_when", booking.date + (booking.time ? " • " + booking.time : ""));
+      setText("c_student", `${booking.studentName} (Age ${booking.age})`);
+      updateSummary();
+    }
+
+    /*************************************************************************
+     * Calendar helpers: Google link & ICS generation
+     *************************************************************************/
+    function formatDateForGoogle(dateIso, timeStr) {
+      // dateIso = YYYY-MM-DD, timeStr = HH:MM (24h)
+      const dt = new Date(dateIso + "T" + (timeStr || "09:00") + ":00");
+      // Google expects UTC-ish yyyyMMddTHHmmssZ; here we create local to UTC conversion
+      return dt.toISOString().replace(/-|:|\.\d+/g,"");
+    }
+
+    function addToGoogleCalendar() {
+      if (!booking.date) { alert("Select a date/time first."); return; }
+      const start = formatDateForGoogle(booking.date, booking.time);
+      // assume 30min for trial, 60 for other sessions
+      const durationMin = booking.program && booking.program.includes("Free Trial") ? 30 : 60;
+      const dtStart = new Date(booking.date + "T" + (booking.time || "09:00") + ":00");
+      const dtEnd = new Date(dtStart.getTime() + durationMin*60000);
+      const startStr = dtStart.toISOString().replace(/-|:|\.\d+/g,"");
+      const endStr = dtEnd.toISOString().replace(/-|:|\.\d+/g,"");
+      const title = encodeURIComponent(`SM Chess Academy — ${booking.program}`);
+      const details = encodeURIComponent(`Student: ${booking.studentName}\nInstructor: ${booking.instructor || "Any"}\nNotes: Booked via SM Chess Academy`);
+      const location = encodeURIComponent("Online / Zoom (details on confirmation)");
+      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startStr}/${endStr}&details=${details}&location=${location}&sf=true&output=xml`;
+      window.open(url, "_blank");
+    }
+
+    function downloadICS(data) {
+      if (!data.date) { alert("Please select date & time first."); return; }
+      const start = new Date(data.date + "T" + (data.time || "09:00") + ":00");
+      const duration = data.program && data.program.includes("Free Trial") ? 30 : 60;
+      const end = new Date(start.getTime() + duration*60000);
+      const pad = n => String(n).padStart(2,"0");
+      const toICSDate = dt => dt.getUTCFullYear()+pad(dt.getUTCMonth()+1)+pad(dt.getUTCDate())+"T"+pad(dt.getUTCHours())+pad(dt.getUTCMinutes())+pad(dt.getUTCSeconds())+"Z";
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//SM Chess Academy//EN",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        `DTSTAMP:${toICSDate(new Date())}`,
+        `DTSTART:${toICSDate(start)}`,
+        `DTEND:${toICSDate(end)}`,
+        `SUMMARY:SM Chess Academy — ${data.program}`,
+        `DESCRIPTION:Student: ${data.studentName}\\nParent: ${data.parentName || ""}\\nEmail: ${data.parentEmail || ""}`,
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+      const blob = new Blob([ics], { type: 'text/calendar' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `smchess_${data.date}_${data.time || "0900"}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    /*************************************************************************
+     * Submission to backend (Formspree example). Adjust to your API.
+     *************************************************************************/
+    async function submitBooking(ev) {
+      ev.preventDefault && ev.preventDefault();
+      // final validation
+      if (!validateStep(4)) { gotoStep(4); return; }
+      // show status
+      const statusEl = el("#submissionStatus");
+      statusEl.innerHTML = `<div class="muted">Submitting booking…</div>`;
+
+      // compose payload
+      const payload = {
+        program: booking.program,
+        sessionType: booking.sessionType,
+        instructor: booking.instructor,
+        date: booking.date,
+        time: booking.time,
+        studentName: booking.studentName,
+        age: booking.age,
+        level: booking.level,
+        parentName: booking.parentName,
+        parentEmail: booking.parentEmail,
+        whatsapp: booking.whatsapp,
+        source: "Website Booking Form"
+      };
+
+      try {
+        // Post to Formspree (or your API). Replace FORM_ENDPOINT with your endpoint.
+        // Formspree expects form data; here we POST JSON for custom API. If using Formspree's JSON
+        // endpoint you might need to set specific fields or use a form submission.
+        const res = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Server error: ${res.status} ${text}`);
+        }
+        statusEl.innerHTML = `<div style="color:green;font-weight:700">Booking submitted — a confirmation has been sent to ${booking.parentEmail}.</div>`;
+        // show simple success - optionally send user to thank you page or show booking id
+        // reset some UI, or lock form
+        el("#submitBooking").disabled = true;
+        // Optionally open mailto for admin or show instructions
+        updateSummary();
+      } catch (err) {
+        statusEl.innerHTML = `<div class="error">Submission failed: ${err.message}</div><div class="hint">If this persists, contact info@smchessacademy.com</div>`;
+      }
+    }
+
+  </script>
+</body>
+</html>

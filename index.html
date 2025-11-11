@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SM Chess Academy</title>
+  <meta name="description" content="SM Chess Academy — Online chess coaching for all ages. Book a free trial." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary:#5B3A29;
+      --accent:#D32F2F;
+      --accent-hover:#B71C1C;
+      --beige:#F5E9DA;
+      --beige-light:#FBF6F0;
+      --text:#211D1B;
+      --white:#FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--beige);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; height: auto; border-radius: 14px; }
+
+    /* Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 72px 0; }
+    .section h2 { font-family: Poppins, sans-serif; font-size: 36px; margin: 0 0 14px; color: var(--primary); }
+    .muted { color: #5c524a; }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--primary);
+      z-index: 20;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      font-family: Poppins, sans-serif;
+      font-weight: 700; font-size: 22px;
+      color: var(--white);
+    }
+    .brand a { color: var(--white); }
+    .nav-menu {
+      display: flex; align-items: center; gap: 18px;
+    }
+    .nav-menu a {
+      color: var(--white); font-weight: 500; opacity: .95;
+      transition: color 0.3s ease;
+    }
+    .nav-menu a:hover { color: var(--accent); }
+    .cta {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(211,47,47,.25);
+      transition: background 0.3s ease;
+    }
+    .cta:hover { background: var(--accent-hover); }
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 26px;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, var(--primary) 0%, #4a2f22 100%);
+      color: #fff;
+      padding: 90px 0;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 30px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-family: Poppins, sans-serif;
+      font-size: 50px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero p { opacity: .95; margin-bottom: 20px; font-size: 18px; }
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .btn.secondary {
+      background: transparent;
+      border: 2px solid #fff;
+    }
+    .btn.secondary:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .hero img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      transition: transform 0.6s ease;
+    }
+    .hero img:hover { transform: scale(1.03); }
+
+    /* Cards */
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(91,58,41,.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 28px rgba(91,58,41,.25);
+    }
+
+    /* Coach Section */
+    .coach-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+    .coach-text { flex: 1; }
+    .coach-photo img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    /* Testimonials */
+    .testimonials { background: var(--primary); color: #fff; }
+    .quote {
+      background: rgba(255,255,255,.08);
+      border-radius: 16px;
+      padding: 20px;
+      transition: background 0.3s ease;
+    }
+    .quote:hover { background: rgba(255,255,255,.15); }
+
+    /* Ribbon CTA */
+    .ribbon {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: #EADFD7;
+      margin-top: 64px;
+    }
+    .foot {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 20px;
+      padding: 40px 0;
+    }
+    footer a { color: #f5cfcf; transition: color 0.2s ease; }
+    footer a:hover { color: #fff; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid3 { grid-template-columns: 1fr; }
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .coach-card { flex-direction: column; text-align: center; }
+      .foot { grid-template-columns: 1fr; }
+      .nav-menu {
+        display: none;
+        position: absolute;
+        left: 0; right: 0; top: 72px;
+        background: var(--primary);
+        flex-direction: column;
+        gap: 10px;
+        padding: 14px 20px;
+      }
+      .nav-menu.open { display: flex; }
+      .nav-toggle { display: block; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand"><a href="index.html">♕ SM Chess Academy</a></div>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-menu').classList.toggle('open')">☰</button>
+    <nav class="nav-menu">
+      <a href="programs.html">Programs</a>
+      <a href="about.html">About</a>
+      <a href="success.html">Success</a>
+      <a href="login.html">Login</a>
+      <a href="tournaments.html">Tournaments</a>
+      <a href="booking.html" class="cta">Book Free Trial</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1>Master Chess Online with Grandmaster Coaching</h1>
+      <p>Trusted by 500+ students worldwide. Strategic lessons for all ages and skill levels.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+        <a class="btn" href="booking.html">Book Your Free Trial</a>
+        <a class="btn secondary" href="programs.html">View Our Programs</a>
+      </div>
+    </div>
+    <div>
+      <img src="images/hero.png" alt="Kids and adults playing chess online happily">
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how-it-works">
+  <div class="container">
+    <h2>How It Works</h2>
+    <p class="muted">Three simple steps to start your chess journey.</p>
+    <div class="grid3" style="margin-top:24px;">
+      <div class="card">
+        <img src="images/booking.png" alt="Book a Trial">
+        <h3>1. Book a Trial</h3>
+        <p>Select a free 30-minute trial session that fits your schedule.</p>
+      </div>
+      <div class="card">
+        <img src="images/coach.png" alt="Meet Your Coach">
+        <h3>2. Meet Your Coach</h3>
+        <p>Join your live session, get a quick assessment, and a tailored plan.</p>
+      </div>
+      <div class="card">
+        <img src="images/pawn.png" alt="Start Your Journey">
+        <h3>3. Start Your Journey</h3>
+        <p>Enroll in the right program and track progress on your dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="featured-coaches">
+  <div class="container">
+    <h2>Featured Coach</h2>
+    <p class="muted">Learn from titled players and experienced mentors.</p>
+
+    <article class="coach-card">
+      <div class="coach-text">
+        <h3 style="font-size: 34px;">Deepak Raj</h3>
+        <p class="muted">FIDE Master | 2+ Years of Experience</p>
+        <p>Specialized in training beginners to advanced students with a focus on improving strategy and tournament preparation.</p>
+      </div>
+      <div class="coach-photo">
+        <img src="images/coach1.jpg" alt="Coach Name">
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="section testimonials" id="testimonials">
+  <div class="container">
+    <h2 style="color:#fff;">What Families Say</h2>
+    <div class="grid3" style="margin-top:24px;">
+      <blockquote class="quote">
+        <img src="images/student1.jpg" alt="need to be filled" style="width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:8px;">
+        <p>"-"</p>
+        <cite class="muted" style="color:#f2e9e3;">— need to be filled.</cite>
+      </blockquote>
+      <blockquote class="quote">
+        <img src="images/student2.jpg" alt="need to be filled" style="width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:8px;">
+        <p>"-."</p>
+        <cite class="muted" style="color:#f2e9e3;">— need to be filled.</cite>
+      </blockquote>
+      <blockquote class="quote">
+        <img src="images/student3.jpg" alt="need to be filled" style="width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:8px;">
+        <p>"-"</p>
+        <cite class="muted" style="color:#f2e9e3;">— need to be filled</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="padding:40px 0 72px;">
+  <div class="ribbon">
+    <strong style="font-size:20px;">Ready to Make Your Move?</strong>
+    <a href="booking.html" class="btn" style="background:#fff;color:var(--accent)">Book Your Free Trial Now</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container foot">
+    <div>
+      <strong>♛ SM Chess Academy</strong>
+      <p class="muted">Strategic online chess lessons for all ages and skill levels.</p>
+    </div>
+    <div>
+      <strong>Quick Links</strong><br>
+      <a href="programs.html">Programs & Pricing</a><br>
+      <a href="booking.html">Book a Free Trial</a><br>
+      <a href="about.html">About Us</a><br>
+      <a href="success.html">Student Success</a><br>
+    </div>
+    <div>
+      <strong>Contact</strong>
+      <p class="muted">Email: need to be filled<br>WhatsApp: need to be filled</p>
+    </div>
+  </div>
+  <div class="container" style="padding:12px 0;border-top:1px solid #3d2a1e;color:#d6c9c1;">© 2025 SM Chess Academy</div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  document.addEventListener('click', (e)=>{
+    const menu = document.querySelector('.nav-menu');
+    const toggle = document.querySelector('.nav-toggle');
+    if(!menu || !toggle) return;
+    if(!menu.contains(e.target) && !toggle.contains(e.target)){
+      menu.classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
