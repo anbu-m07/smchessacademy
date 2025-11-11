@@ -8,12 +8,16 @@ public_folder: "/images/uploads"
 collections:
   - name: "tournaments"
     label: "Tournaments"
-    folder: "content"
-    create: true
-    slug: "tournaments"
-    format: "json"
-    identifier_field: "title"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Link", name: "link", widget: "string" }
+    label_singular: "Tournament"
+    files:
+      - file: "content/tournaments.json"
+        label: "Tournaments List"
+        name: "tournamentslist"
+        fields:
+          - label: "Tournaments"
+            name: "tournaments"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Link", name: "link", widget: "string" }
